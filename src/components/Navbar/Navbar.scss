@@ -1,0 +1,85 @@
+@import "../../styles/config";
+
+.navbar {
+  display: grid;
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  top: 0;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas: "logo search icons";
+  background-color: $secondary-color;
+  align-items: center;
+  height: 70px;
+  padding: 0 3rem;
+  // border-bottom: 2px solid $tertiary-color;
+}
+
+.logo {
+  justify-self: start;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.search-container {
+  width: 60%;
+  min-width: 350px;
+  justify-self: center;
+
+  .search {
+    width: 100%;
+    position: relative;
+    display: flex;
+
+    input {
+      width: 100%;
+      border: 2px solid #fff;
+      border-right: none;
+      padding: 5px 10px;
+      height: 34px;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+
+    input:focus {
+      box-shadow: 0 0 5px $tertiary-color;
+      border: 1px solid $tertiary-color;
+    }
+
+    button {
+      width: 40px;
+      height: 34px;
+      border: 2px solid $tertiary-color;
+      border-left: none;
+      background: $tertiary-color;
+      text-align: center;
+      color: $secondary-color;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+}
+
+.links {
+  justify-self: end;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+  a {
+    font-size: 3rem;
+    color: $primary-font-color;
+  }
+
+  a:hover {
+    color: $tertiary-color;
+  }
+}
+
+.menuIcon {
+  display: none;
+}

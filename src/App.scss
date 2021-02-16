@@ -1,3 +1,7 @@
+@import "./styles/config";
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
+
 * {
   margin: 0;
   padding: 0;
@@ -9,10 +13,36 @@ html {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $primary-font;
   line-height: 1.6;
   scroll-behavior: smooth;
   min-height: 100vh;
   font-size: 16px;
   font-size: 1.6rem;
+  background-color: $primary-color;
+  color: $primary-font-color;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.glide {
+  margin: 0;
+}
+
+.glide__arrow {
+  border: transparent;
+}
+
+.glide__arrow--left {
+  left: 1rem;
+}
+
+.glide__arrow--right {
+  right: 1rem;
 }
