@@ -26,7 +26,7 @@ const Carousel = (props) => {
     });
   }, []);
   return (
-    <section>
+    <section className="slider">
       <h1 className="category">{props.category.replace("_", " ")}</h1>
       <div className={`glide glide-${props.category}`}>
         <div className="glide__track" data-glide-el="track">

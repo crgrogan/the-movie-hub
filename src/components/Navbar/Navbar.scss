@@ -10,18 +10,13 @@
   grid-template-areas: "logo search icons";
   background-color: $secondary-color;
   align-items: center;
-  height: 70px;
-  padding: 0 3rem;
+  height: 75px;
+  padding: 0 4rem;
   // border-bottom: 2px solid $tertiary-color;
 }
 
 .logo {
   justify-self: start;
-
-  img {
-    width: 50px;
-    height: 50px;
-  }
 }
 
 .search-container {
