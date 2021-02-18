@@ -6,18 +6,40 @@
   margin-top: 75px;
   border-bottom: 2px solid $tertiary-color;
 
-  img {
+  /*  img {
+    width: 100px;
+    height: 100%;
+  } */
+
+  .glide {
+    margin: auto;
+    display: flex;
+    text-align: center;
     width: 100%;
     height: 100%;
   }
 
-  .movie-info {
-    position: absolute;
-    bottom: 100px;
-    left: 100px;
+  .glide__track {
+    height: 100%;
   }
 
-  .banner-heading {
-    font-size: 3rem;
+  .glide__slides {
+    height: 100%;
+
+    img {
+      width: 100vw;
+      height: 100%;
+    }
+  }
+
+  .movie-info {
+    position: relative;
+    text-align: left;
+    bottom: 150px;
+    left: 50px;
+
+    p {
+      font-size: 18px;
+    }
   }
 }
