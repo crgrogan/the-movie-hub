@@ -4,7 +4,7 @@ import axios from "axios";
 import Glide from "@glidejs/glide";
 
 import "./Carousel.scss";
-import stockPhoto from "../../images/stock-photo.jpg";
+import defaultPoster from "../../images/default-poster.jpg";
 
 const Carousel = (props) => {
   const [list, setList] = useState([]);
@@ -33,12 +33,12 @@ const Carousel = (props) => {
           <ul className="glide__slides">
             {list.map((movie) => (
               <li key={movie.id} className="glide__slide">
-                <Link to="/specificmovie">
+                <Link to={`/movies/${movie.id}`}>
                   <img
                     src={
                       movie.poster_path
                         ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
-                        : stockPhoto
+                        : defaultPoster
                     }
                     alt="Poster for movie"
                   />

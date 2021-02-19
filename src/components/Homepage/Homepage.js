@@ -1,16 +1,11 @@
-import Glide from "@glidejs/glide";
-
-import Navbar from "../Navbar/Navbar";
 import Banner from "../Banner/Banner";
 import Carousel from "../Carousel/Carousel";
-import Footer from "../Footer/Footer";
 
 import "./Homepage.scss";
 
 const Homepage = () => {
   return (
     <div>
-      <Navbar />
       <section>
         <Banner />
       </section>
@@ -20,7 +15,6 @@ const Homepage = () => {
         <Carousel category="top_rated" />
         <Carousel category="popular" />
       </section>
-      <Footer />
     </div>
   );
 };
