@@ -1,0 +1,107 @@
+@import "../../styles/config";
+
+.actor-details-container {
+  min-height: 100vh;
+  width: 80%;
+  margin: auto;
+  margin-top: 75px;
+  padding: 50px 0;
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .back-btn {
+    position: absolute;
+    top: 100px;
+    color: $tertiary-color;
+    font-size: 50px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .actor-details-info {
+    margin-bottom: 50px;
+
+    img {
+      width: 160px;
+      height: 200px;
+      border-radius: 5px;
+      border: 2px solid $tertiary-color;
+      float: left;
+      margin: 0 30px 5px 0;
+    }
+  }
+
+  .actor-details-name {
+    margin-bottom: 10px;
+  }
+
+  .actor-details-basic-info {
+    display: flex;
+    margin-bottom: 20px;
+
+    .actor-details-birthday h3 {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .biography h2 {
+    margin-bottom: 10px;
+  }
+
+  .credited-movies {
+    h2 {
+      margin-bottom: 25px;
+    }
+
+    .credited-movie-card {
+      box-sizing: content-box;
+      display: flex;
+      background-color: $card-color;
+      border: 1px solid $secondary-color;
+      box-shadow: 5px 10px $secondary-color;
+      margin-bottom: 50px;
+      height: 175px;
+
+      .credited-movie-poster {
+        width: 12%;
+
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .credited-movie-info {
+        width: 88%;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 30px 10px 30px;
+
+        .credited-movie-header {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+
+        p {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          margin-bottom: 10px;
+        }
+
+        .credited-movie-rating {
+          .fa-star {
+            font-size: inherit;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}

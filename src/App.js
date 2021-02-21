@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Homepage from "./components/Homepage/Homepage";
 import MovieDetails from "./components/MovieDetails/MovieDetails";
+import ActorDetails from "./components/ActorDetails/ActorDetails";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <div>
         <Navbar />
         <Route path="/" exact component={Homepage} />
-        <Route path="/movies/:id" exact component={MovieDetails} />
+        <Route path="/movies/:id" component={MovieDetails} />
+        <Route path="/actors/:id" component={ActorDetails} />
         <Footer />
       </div>
     </Router>

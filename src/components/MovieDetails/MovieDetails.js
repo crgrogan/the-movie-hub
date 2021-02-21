@@ -93,7 +93,7 @@ const MovieDetails = () => {
               <li>
                 |
                 <span className="selected-movie-rating">
-                  {selectedMovie.runtime} mins
+                  {selectedMovie.runtime} minscast
                 </span>
               </li>
             </ul>
@@ -111,7 +111,7 @@ const MovieDetails = () => {
                 <ul className="glide__slides">
                   {cast.map((person) => (
                     <li key={person.id} className="glide__slide">
-                      <Link to="/specificactor">
+                      <Link to={`/actors/${person.id}`}>
                         <img
                           src={
                             person.profile_path
@@ -187,12 +187,16 @@ const MovieDetails = () => {
           <h2>Reviews</h2>
           {reviews && reviews.length > 0 ? (
             reviews.slice(0, 7).map((review, index) => (
-              <article className="review-card">
+              <article key={review.id} className="review-card">
                 <h3 className="review-author">By {review.author}</h3>
                 <p className="review-body">{review.content}</p>
-                <Link to="/fullreview" className="full-review-btn">
-                  Read full review <i className="fa fa-chevron-right"></i>
-                </Link>
+                <a
+                  href={review.url}
+                  target="_blank"
+                  className="full-review-btn"
+                >
+                  See full review <i className="fa fa-chevron-right"></i>
+                </a>
               </article>
             ))
           ) : (
@@ -200,7 +204,7 @@ const MovieDetails = () => {
           )}
         </section>
         <button onClick={goBack} className="back-btn">
-          <i class="fa fa-arrow-left"></i>
+          <i className="fa fa-arrow-left"></i>
         </button>
       </section>
     </div>
