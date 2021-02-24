@@ -13,7 +13,7 @@ const ActorDetails = () => {
 
   useEffect(async () => {
     let res = await axios.get(
-      `https://api.themoviedb.org/3/person/${id}?api_key=0e221d8f43d840531124c98dbd153f0c&language=en-US&append_to_response=movie_credits`
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&append_to_response=movie_credits`
     );
     setActorDetails(res.data);
   }, []);
@@ -24,9 +24,9 @@ const ActorDetails = () => {
 
   return (
     <section className="actor-details-container">
-      {/* <button onClick={goBack} className="back-btn">
+      <button onClick={goBack} className="back-btn">
         <i className="fa fa-arrow-left"></i>
-      </button> */}
+      </button>
 
       <section className="actor-details-info">
         <img

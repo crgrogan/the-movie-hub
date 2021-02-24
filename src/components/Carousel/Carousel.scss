@@ -48,6 +48,19 @@
     &:hover {
       transform: scale(1.1);
       opacity: 1;
+      .rating {
+        animation: fadeIn 0.5s ease-in;
+        animation-fill-mode: forwards;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 0.85;
+      }
     }
 
     img {
@@ -58,9 +71,9 @@
 
     .rating {
       position: absolute;
-      top: 10px;
+      top: 15px;
       left: 0;
-      padding: 5px;
+      padding: 3px 10px;
       background-color: black;
       opacity: 0.85;
     }

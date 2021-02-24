@@ -5,13 +5,20 @@ import Glide from "@glidejs/glide";
 
 import "./Carousel.scss";
 import defaultPoster from "../../images/default-poster.jpg";
+import { getGenre } from "../../utils";
 
 const Carousel = (props) => {
   const [list, setList] = useState([]);
+  const [genresList, setGenresList] = useState([]);
 
   useEffect(async () => {
+    let genresRes = await axios.get(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
+    );
+    setGenresList(genresRes.data.genres);
+
     let res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${props.category}?api_key=0e221d8f43d840531124c98dbd153f0c&language=en-US&page=1&region=IE`
+      `https://api.themoviedb.org/3/movie/${props.category}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
     );
     setList(res.data.results);
     const sliders = document.querySelectorAll(`.glide-${props.category}`);
@@ -43,7 +50,7 @@ const Carousel = (props) => {
                     alt="Poster for movie"
                   />
                   <h4>{movie.title}</h4>
-                  <h5>Genre</h5>
+                  <h5>{getGenre(movie.genre_ids[0], genresList)}</h5>
                   {movie.vote_count !== 0 ? (
                     <span className="rating">
                       {movie.vote_average} <i className="fa fa-star"></i>

@@ -7,6 +7,7 @@ import "./MovieDetails.scss";
 import defaultPerson from "../../images/default-person.png";
 import defaultPoster from "../../images/default-poster.jpg";
 import defaultBackdrop from "../../images/default-backdrop.jpg";
+import { getGenre } from "../../utils";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -15,11 +16,17 @@ const MovieDetails = () => {
   const [cast, setCast] = useState([]);
   const [trailers, setTrailers] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [genresList, setGenresList] = useState([]);
   const history = useHistory();
 
   useEffect(async () => {
+    let genresRes = await axios.get(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
+    );
+    setGenresList(genresRes.data.genres);
+
     let res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=0e221d8f43d840531124c98dbd153f0c&language=en-US&append_to_response=credits,trailers,reviews,images&include_image_language=en,null`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&append_to_response=credits,trailers,reviews,images&include_image_language=en,null`
     );
     setSelectedMovie(res.data);
     setImages(res.data.images);
@@ -78,7 +85,14 @@ const MovieDetails = () => {
             <h1 className="selected-movie-title">{selectedMovie.title}</h1>
             <ul>
               <li>
-                <span className="selected-movie-genre">Genre</span>
+                {selectedMovie.genres && (
+                  <div className="selected-movie-genre">
+                    <span>{selectedMovie.genres[0].name}</span>{" "}
+                    {selectedMovie.genres.length > 1 && (
+                      <span>/ {selectedMovie.genres[1].name}</span>
+                    )}
+                  </div>
+                )}
               </li>
               <li>
                 |
@@ -93,7 +107,7 @@ const MovieDetails = () => {
               <li>
                 |
                 <span className="selected-movie-rating">
-                  {selectedMovie.runtime} minscast
+                  {selectedMovie.runtime} mins
                 </span>
               </li>
             </ul>
@@ -186,7 +200,7 @@ const MovieDetails = () => {
         <section className="reviews mb-10">
           <h2>Reviews</h2>
           {reviews && reviews.length > 0 ? (
-            reviews.slice(0, 7).map((review, index) => (
+            reviews.slice(0, 7).map((review) => (
               <article key={review.id} className="review-card">
                 <h3 className="review-author">By {review.author}</h3>
                 <p className="review-body">{review.content}</p>

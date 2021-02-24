@@ -5,16 +5,22 @@ import Glide from "@glidejs/glide";
 
 import "./Banner.scss";
 import defaultBackdrop from "../../images/default-backdrop.jpg";
+import { getGenre } from "../../utils";
 
 const Banner = () => {
   const [bannerMovie, setBannerMovie] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
+  const [genresList, setGenresList] = useState([]);
 
   useEffect(async () => {
-    let res = await axios.get(
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=0e221d8f43d840531124c98dbd153f0c&language=en-US&page=1&region=IE"
+    let genresRes = await axios.get(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
     );
-    console.log(res.data);
+    setGenresList(genresRes.data.genres);
+
+    let res = await axios.get(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
+    );
     setBannerMovie(res.data.results);
     setBannerImages(res.data.results.images);
 
@@ -35,18 +41,24 @@ const Banner = () => {
                 <Link to={`/movies/${movie.id}`}>
                   <img
                     src={
-                      movie.poster_path
+                      movie.backdrop_path
                         ? `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
-                        : { defaultBackdrop }
+                        : defaultBackdrop
                     }
-                    alt="Poster for movie"
+                    alt="Backdrop for movie"
                   />
                   <div className="movie-info">
                     <p>Now Playing</p>
                     <h1 className="banner-heading">{movie.title}</h1>
                     <p>
-                      Genre | {movie.vote_average}{" "}
-                      <i className="fa fa-star"></i>
+                      {getGenre(movie.genre_ids[0], genresList)} |{" "}
+                      {movie.vote_count !== 0 ? (
+                        <span>
+                          {movie.vote_average} <i className="fa fa-star"></i>
+                        </span>
+                      ) : (
+                        <span>Not Rated</span>
+                      )}
                     </p>
                   </div>
                 </Link>
