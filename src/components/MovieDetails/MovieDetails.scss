@@ -1,6 +1,8 @@
 @import "../../styles/config";
 
 .selected-movie-container {
+  padding-bottom: 60px;
+
   .back-btn {
     position: absolute;
     top: 100px;
@@ -169,5 +171,79 @@
     &:hover {
       padding-left: 5px;
     }
+  }
+}
+
+// similar-movies slider
+
+.similar-movies {
+  .glide {
+    margin: auto;
+    display: flex;
+    text-align: center;
+    width: 100%;
+  }
+
+  .glide__track {
+    height: 350px;
+
+    &:last-child() {
+      border: none;
+    }
+  }
+
+  .glide__slides {
+    height: 100%;
+    padding: 3rem 1rem;
+  }
+
+  .glide__slide {
+    opacity: 0.6;
+    transition: 0.3s all;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 1;
+      .rating {
+        animation: fadeIn 0.5s ease-in;
+        animation-fill-mode: forwards;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 0.85;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 185px;
+      border-radius: 5px;
+    }
+
+    .rating {
+      position: absolute;
+      top: 15px;
+      left: 0;
+      padding: 3px 10px;
+      background-color: black;
+      opacity: 0.85;
+    }
+
+    .fa-star {
+      font-size: inherit;
+      margin-left: 2px;
+    }
+  }
+
+  .slider-arrow {
+    position: relative;
+    bottom: 50px;
+    font-size: 8rem;
+    color: $tertiary-color;
   }
 }

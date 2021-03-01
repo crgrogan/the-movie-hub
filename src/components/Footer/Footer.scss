@@ -1,10 +1,14 @@
 @import "../../styles/config";
 
 footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   padding: 3rem 5rem 0 5rem;
   background-color: $secondary-color;
-  height: 230px;
+  height: 200px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "info navigate endorse";
@@ -53,6 +57,7 @@ footer {
 
   ul {
     list-style-type: none;
+    margin-bottom: 50px;
   }
 
   li {

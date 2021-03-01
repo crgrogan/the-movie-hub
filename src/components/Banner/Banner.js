@@ -23,12 +23,14 @@ const Banner = () => {
     );
     setBannerMovie(res.data.results);
     setBannerImages(res.data.results.images);
-
-    new Glide(".glide", {
-      type: "slider",
-      startAt: 0,
-      autoplay: 7000,
-    }).mount();
+    var slider = document.querySelector(".glide");
+    if (slider) {
+      new Glide(".glide", {
+        type: "slider",
+        startAt: 0,
+        autoplay: 7000,
+      }).mount();
+    }
   }, []);
 
   return (
@@ -48,7 +50,7 @@ const Banner = () => {
                     alt="Backdrop for movie"
                   />
                   <div className="movie-info">
-                    <p>Now Playing</p>
+                    <p>Latest</p>
                     <h1 className="banner-heading">{movie.title}</h1>
                     <p>
                       {getGenre(movie.genre_ids[0], genresList)} |{" "}

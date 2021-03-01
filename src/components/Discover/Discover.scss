@@ -30,6 +30,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin: 20px 0;
 
       input,
       select {
@@ -58,7 +59,7 @@
       color: $primary-font-color;
       font-size: 1.2em;
       font-weight: 700;
-      margin-top: 40px;
+      margin-top: 20px;
 
       &:hover {
         border: 2px solid $tertiary-color;
@@ -79,6 +80,11 @@
     position: relative;
     text-align: center;
     font-size: 1.1em;
+    transition: transform 0.5s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
 
     img {
       width: 100%;

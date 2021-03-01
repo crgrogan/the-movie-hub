@@ -17,6 +17,7 @@ const MovieDetails = () => {
   const [trailers, setTrailers] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [genresList, setGenresList] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
   const history = useHistory();
 
   useEffect(async () => {
@@ -24,7 +25,10 @@ const MovieDetails = () => {
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
     );
     setGenresList(genresRes.data.genres);
-
+    let similarMoviesRes = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
+    );
+    setSimilarMovies(similarMoviesRes.data.results);
     let res = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&append_to_response=credits,trailers,reviews,images&include_image_language=en,null`
     );
@@ -33,8 +37,11 @@ const MovieDetails = () => {
     setCast(res.data.credits.cast.slice(0, 15));
     setTrailers(res.data.trailers.youtube.slice(0, 6));
     setReviews(res.data.reviews.results);
-    const glideCast = document.querySelectorAll(`.glide-cast`);
-    const glideTrailers = document.querySelectorAll(`.glide-trailers`);
+    const glideCast = document.querySelectorAll(".glide-cast");
+    const glideTrailers = document.querySelectorAll(".glide-trailers");
+    const glideSimilarMovies = document.querySelectorAll(
+      ".glide-similar-movies"
+    );
 
     glideCast.forEach((item) => {
       new Glide(item, {
@@ -49,6 +56,14 @@ const MovieDetails = () => {
         type: "carousel",
         startAt: 0,
         perView: 3,
+        gap: 25,
+      }).mount();
+    });
+    glideSimilarMovies.forEach((item) => {
+      new Glide(item, {
+        type: "carousel",
+        startAt: 0,
+        perView: 7,
         gap: 25,
       }).mount();
     });
@@ -85,7 +100,7 @@ const MovieDetails = () => {
             <h1 className="selected-movie-title">{selectedMovie.title}</h1>
             <ul>
               <li>
-                {selectedMovie.genres && (
+                {selectedMovie.genres && selectedMovie.genres[0] && (
                   <div className="selected-movie-genre">
                     <span>{selectedMovie.genres[0].name}</span>{" "}
                     {selectedMovie.genres.length > 1 && (
@@ -215,6 +230,54 @@ const MovieDetails = () => {
             ))
           ) : (
             <p className="nothing-to-display">No reviews to display</p>
+          )}
+        </section>
+        <section className="similar-movies mb-5">
+          <h2>Similar Movies</h2>
+          {similarMovies && similarMovies.length > 0 ? (
+            <div className={"glide glide-similar-movies"}>
+              <div className="glide__track" data-glide-el="track">
+                <ul className="glide__slides">
+                  {similarMovies.map((movie) => (
+                    <li key={movie.id} className="glide__slide">
+                      <Link to={`/movies/${movie.id}`}>
+                        <img
+                          src={
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
+                              : defaultPoster
+                          }
+                          alt="Poster for movie"
+                        />
+                        <h4>{movie.title}</h4>
+                        <h5>{getGenre(movie.genre_ids[0], genresList)}</h5>
+                        {movie.vote_count !== 0 ? (
+                          <span className="rating">
+                            {movie.vote_average} <i className="fa fa-star"></i>
+                          </span>
+                        ) : null}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="glide__arrows" data-glide-el="controls">
+                <button
+                  className="glide__arrow glide__arrow--left"
+                  data-glide-dir="<"
+                >
+                  <i className="fa fa-angle-left slider-arrow"></i>
+                </button>
+                <button
+                  className="glide__arrow glide__arrow--right"
+                  data-glide-dir=">"
+                >
+                  <i className="fa fa-angle-right slider-arrow"></i>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className="nothing-to-display">No Similar Movies to display</p>
           )}
         </section>
         <button onClick={goBack} className="back-btn">

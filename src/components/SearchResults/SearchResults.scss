@@ -33,6 +33,11 @@
     position: relative;
     text-align: center;
     font-size: 1.1em;
+    transition: transform 0.5s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
 
     img {
       width: 100%;

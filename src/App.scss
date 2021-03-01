@@ -10,13 +10,14 @@
 
 html {
   font-size: 62.5%;
+  min-height: 100%;
 }
 
 body {
   font-family: $primary-font;
   line-height: 1.6;
   scroll-behavior: smooth;
-  min-height: 100vh;
+  min-height: 100%;
   font-size: 16px;
   font-size: 1.6rem;
   background-color: $primary-color;
@@ -49,4 +50,20 @@ a:active {
 
 button {
   cursor: pointer;
+}
+
+.container {
+  position: relative;
+  min-height: 100%;
+}
+
+.content-wrap {
+  padding-bottom: 200px; /* Footer height */
+}
+
+.loader-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./Navbar.scss";
 import logo from "../../images/main-logo.png";
 
 const Navbar = () => {
   const [query, setQuery] = useState("");
+  const [username, setUsername] = useState("");
   const history = useHistory();
+  const { isLoggedIn, userInfo } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    isLoggedIn ? setUsername(userInfo.username) : setUsername("");
+  }, [isLoggedIn]);
 
   const submitQuery = (e) => {
     e.preventDefault();
@@ -37,6 +44,7 @@ const Navbar = () => {
         </div>
       </form>
       <div className="links">
+        <h2>{username}</h2>
         <Link to="/">
           <i className="fa fa-home"></i>
         </Link>

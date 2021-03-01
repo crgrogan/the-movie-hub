@@ -44,6 +44,9 @@ const Footer = () => {
             </Link>
           </ul>
         </div>
+        <div className="copyright">
+          <p>&copy; Copyright 2021 The Movie Hub - All Rights Reserved</p>
+        </div>
       </div>
       <div className="endorse">
         <a href="https://www.themoviedb.org/">
@@ -56,9 +59,6 @@ const Footer = () => {
           This product uses the TMDb API but is not endorsed or certified by
           TMDb.
         </p>
-      </div>
-      <div className="copyright">
-        <p>&copy; Copyright 2021 The Movie Hub - All Rights Reserved</p>
       </div>
     </footer>
   );
