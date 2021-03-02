@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Loader from "react-loader-spinner";
@@ -7,17 +7,12 @@ import Loader from "react-loader-spinner";
 import "./Profile.scss";
 import Card from "../Card/Card";
 import defaultPoster from "../../images/default-poster.jpg";
-import { getSession } from "../../actions/authActions";
-import {
-  getFavouritesList,
-  getRatedList,
-  getWatchlist,
-  getLists,
-} from "../../actions/movieActions";
+import { getSession, deleteSession } from "../../actions/authActions";
 
 const Profile = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [activeTab, setActiveTab] = useState("favourites");
   const {
@@ -34,6 +29,10 @@ const Profile = () => {
     activeItem[0].classList.remove("active-nav-item");
     e.target.classList.add("active-nav-item");
     setActiveTab(category);
+  };
+
+  const handleLogout = () => {
+    dispatch(deleteSession(sessionId, history));
   };
 
   return (
@@ -71,6 +70,11 @@ const Profile = () => {
                   </span>
                   <span className="list-count-title">Watchlist</span>
                 </div>
+              </div>
+              <div>
+                <button className="logout-button" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             </div>
             <div className="profile-navbar">

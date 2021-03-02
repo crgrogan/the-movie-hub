@@ -45,13 +45,13 @@ const Navbar = () => {
       </form>
       <div className="links">
         <h2>{username}</h2>
-        <Link to="/">
+        <Link to="/" data-title="Home">
           <i className="fa fa-home"></i>
         </Link>
-        <Link to="/profile">
+        <Link to="/profile" data-title="Profile">
           <i className="fa fa-user-circle"></i>
         </Link>
-        <Link to="/discover">
+        <Link to="/discover" data-title="Discover">
           <i className="fa fa-eye"></i>
         </Link>
         <Link to="#" className="menuIcon">

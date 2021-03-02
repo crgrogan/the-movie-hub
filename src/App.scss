@@ -52,6 +52,31 @@ button {
   cursor: pointer;
 }
 
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:after {
+  content: attr(data-title);
+  background-color: $tertiary-color;
+  color: black;
+  position: absolute;
+  padding: 5px 10px;
+  font-size: 12px;
+  bottom: -30px;
+  right: -10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden;
+}
+
+[data-title] {
+  position: relative;
+}
+
 .container {
   position: relative;
   min-height: 100%;

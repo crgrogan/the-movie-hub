@@ -67,7 +67,7 @@ const MovieDetails = () => {
         gap: 25,
       }).mount();
     });
-  }, []);
+  }, [id]);
 
   const goBack = () => {
     history.goBack();

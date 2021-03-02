@@ -6,7 +6,8 @@
 
   .profile-header {
     .profile-banner {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 4fr 1fr;
       align-items: center;
       height: 250px;
       background: linear-gradient(
@@ -28,7 +29,6 @@
         background-color: $secondary-color;
         justify-content: center;
         align-items: center;
-        margin-right: 50px;
         font-size: 4em;
       }
 
@@ -55,6 +55,20 @@
         align-items: center;
         justify-content: center;
         margin-right: 10px;
+      }
+
+      .logout-button {
+        background-color: $secondary-color;
+        color: $primary-font-color;
+        font-size: 1.2em;
+        padding: 15px 40px;
+        border-radius: 5px;
+        border: 2px solid $secondary-color;
+        margin: auto;
+
+        &:hover {
+          border: 2px solid black;
+        }
       }
     }
 

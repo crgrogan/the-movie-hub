@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 import { getLists } from "./movieActions";
 
@@ -21,7 +21,7 @@ export const getSession = (token) => async (dispatch) => {
       }
     );
     if (session.status === 200) {
-      Cookie.set("tmh_session_id", session.data.session_id);
+      Cookies.set("tmh_session_id", session.data.session_id);
       dispatch({
         type: "SET_SESSION_ID",
         payload: session.data.session_id,
@@ -66,20 +66,21 @@ export const getUser = (sessionId) => async (dispatch) => {
   }
 };
 
-export const deleteSession = (sessionId) => async (dispatch) => {
-  dispatch({
-    type: "SESSION_DELETE_REQUEST",
-  });
+export const deleteSession = (sessionId, history) => async (dispatch) => {
+  console.log(sessionId);
   try {
-    let logout = await axios.post(
+    Cookies.remove("tmh_session_id");
+    let logout = await axios.delete(
       `https://api.themoviedb.org/3/authentication/session?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
-      {
-        request_token: sessionId,
-      }
+      { params: { session_id: sessionId } }
     );
+    dispatch({
+      type: "DELETE_USER",
+    });
     dispatch({
       type: "SESSION_DELETE_SUCCESS",
     });
+    history.push("/");
   } catch (err) {
     return dispatch({ type: "SESSION_DELETE_FAILED", payload: err.message });
   }
