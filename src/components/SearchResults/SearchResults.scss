@@ -34,6 +34,7 @@
     text-align: center;
     font-size: 1.1em;
     transition: transform 0.5s;
+    word-break: break-word;
 
     &:hover {
       transform: scale(1.1);

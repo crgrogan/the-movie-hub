@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import "./Navbar.scss";
 import logo from "../../images/main-logo.png";
+import { keywordSearch } from "../../actions/movieActions";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [username, setUsername] = useState("");
   const history = useHistory();
@@ -17,11 +19,9 @@ const Navbar = () => {
 
   const submitQuery = (e) => {
     e.preventDefault();
-    history.push({
-      pathname: "/search",
-      search: `?q=${query}`,
-    });
-    return setQuery("");
+    dispatch(keywordSearch(query, 1));
+    setQuery("");
+    history.push(`/search?q=${query}&page=1`);
   };
 
   return (
