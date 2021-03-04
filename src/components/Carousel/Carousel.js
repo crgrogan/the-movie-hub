@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import Glide from "@glidejs/glide";
 
 import "./Carousel.scss";
@@ -8,20 +8,10 @@ import defaultPoster from "../../images/default-poster.jpg";
 import { getGenre } from "../../utils";
 
 const Carousel = (props) => {
-  const [list, setList] = useState([]);
-  const [genresList, setGenresList] = useState([]);
+  const { genresList } = useSelector((state) => state.genres);
 
   useEffect(async () => {
-    let genresRes = await axios.get(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
-    );
-    setGenresList(genresRes.data.genres);
-
-    let res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${props.category}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
-    );
-    setList(res.data.results);
-    const sliders = document.querySelectorAll(`.glide-${props.category}`);
+    const sliders = document.querySelectorAll(`.glide-${props.title}`);
 
     sliders.forEach((item) => {
       new Glide(item, {
@@ -32,13 +22,14 @@ const Carousel = (props) => {
       }).mount();
     });
   }, []);
+
   return (
     <section className="slider">
-      <h1 className="category">{props.category.replace("_", " ")}</h1>
-      <div className={`glide glide-${props.category}`}>
+      <h1 className="category">{props.title.replace("-", " ")}</h1>
+      <div className={`glide glide-${props.title}`}>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {list.map((movie) => (
+            {props.moviesList.map((movie) => (
               <li key={movie.id} className="glide__slide">
                 <Link to={`/movies/${movie.id}`}>
                   <img
@@ -49,7 +40,7 @@ const Carousel = (props) => {
                     }
                     alt="Poster for movie"
                   />
-                  <h4>{movie.title}</h4>
+                  <h4 className="carousel-movie-title">{movie.title}</h4>
                   <h5>{getGenre(movie.genre_ids[0], genresList)}</h5>
                   {movie.vote_count !== 0 ? (
                     <span className="rating">

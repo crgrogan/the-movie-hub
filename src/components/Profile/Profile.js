@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
-import { useLocation, useHistory, Link } from "react-router-dom";
+import { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Loader from "react-loader-spinner";
 
 import "./Profile.scss";
 import Card from "../Card/Card";
 import defaultPoster from "../../images/default-poster.jpg";
-import { getSession, deleteSession } from "../../actions/authActions";
+import { deleteSession } from "../../actions/authActions";
 
 const Profile = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
 

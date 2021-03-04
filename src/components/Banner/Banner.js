@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Glide from "@glidejs/glide";
 
@@ -7,38 +7,23 @@ import "./Banner.scss";
 import defaultBackdrop from "../../images/default-backdrop.jpg";
 import { getGenre } from "../../utils";
 
-const Banner = () => {
-  const [bannerMovie, setBannerMovie] = useState([]);
-  const [bannerImages, setBannerImages] = useState([]);
-  const [genresList, setGenresList] = useState([]);
+const Banner = (props) => {
+  const { genresList } = useSelector((state) => state.genres);
 
   useEffect(async () => {
-    let genresRes = await axios.get(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
-    );
-    setGenresList(genresRes.data.genres);
-
-    let res = await axios.get(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
-    );
-    setBannerMovie(res.data.results);
-    setBannerImages(res.data.results.images);
-    var slider = document.querySelector(".glide");
-    if (slider) {
-      new Glide(".glide", {
-        type: "slider",
-        startAt: 0,
-        autoplay: 7000,
-      }).mount();
-    }
+    new Glide(".glide-slider", {
+      type: "slider",
+      startAt: 0,
+      autoplay: 7000,
+    }).mount();
   }, []);
 
   return (
     <div className="poster">
-      <div className={`glide`}>
+      <div className={"glide glide-slider"}>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {bannerMovie.map((movie) => (
+            {props.moviesList.map((movie) => (
               <li key={movie.id} className="glide__slide">
                 <Link to={`/movies/${movie.id}`}>
                   <img

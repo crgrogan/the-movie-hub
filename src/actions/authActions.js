@@ -67,7 +67,6 @@ export const getUser = (sessionId) => async (dispatch) => {
 };
 
 export const deleteSession = (sessionId, history) => async (dispatch) => {
-  console.log(sessionId);
   try {
     Cookies.remove("tmh_session_id");
     let logout = await axios.delete(

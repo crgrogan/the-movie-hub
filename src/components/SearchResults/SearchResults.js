@@ -16,12 +16,12 @@ const SearchResults = () => {
   const { queryString, searchResults, page, isLoading } = useSelector(
     (state) => state.keywordQuery
   );
+  const { genresList } = useSelector((state) => state.genres);
   const [currentPage, setCurrentPage] = useState(() => {
     let str = location.search.split("?q=")[1];
     let pageNumber = Number(str.split("&page=")[1]);
     return pageNumber;
   });
-  const [genresList, setGenresList] = useState([]);
 
   useComponentWillMount(() => {
     if (!isLoading) {
