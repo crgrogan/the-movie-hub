@@ -1,19 +1,21 @@
+import * as actions from "../actions/types";
+
 export const keywordReducers = (state = {}, action) => {
   switch (action.type) {
-    case "KEYWORD_SEARCH_REQUEST":
+    case actions.KEYWORD_SEARCH_REQUEST:
       return {
         ...state,
         queryString: action.payload,
         isLoading: true,
       };
-    case "KEYWORD_SEARCH_SUCCESS":
+    case actions.KEYWORD_SEARCH_SUCCESS:
       return {
         ...state,
         searchResults: action.payload.data,
         page: action.payload.page,
         isLoading: false,
       };
-    case "KEYWORD_SEARCH_FAILED":
+    case actions.KEYWORD_SEARCH_FAILED:
       return { ...state, searchResults: "", page: 1, isLoading: false };
     default:
       return state;
@@ -22,18 +24,18 @@ export const keywordReducers = (state = {}, action) => {
 
 export const genresReducers = (state = { genresList: [] }, action) => {
   switch (action.type) {
-    case "GENRES_LIST_REQUEST":
+    case actions.GENRES_LIST_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case "GENRES_LIST_SUCCESS":
+    case actions.GENRES_LIST_SUCCESS:
       return {
         ...state,
         genresList: action.payload,
         isLoading: false,
       };
-    case "GENRES_LIST_FAILED":
+    case actions.GENRES_LIST_FAILED:
       return { ...state, genresList: [], isLoading: false };
     default:
       return state;
@@ -45,12 +47,12 @@ export const categoryReducers = (
   action
 ) => {
   switch (action.type) {
-    case "MOVIE_CATEGORY_REQUEST":
+    case actions.MOVIE_CATEGORY_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case "MOVIE_CATEGORY_SUCCESS":
+    case actions.MOVIE_CATEGORY_SUCCESS:
       return {
         ...state,
         nowPlaying: action.payload.nowPlaying,
@@ -59,7 +61,7 @@ export const categoryReducers = (
         popular: action.payload.popular,
         isLoading: false,
       };
-    case "MOVIE_CATEGORY_FAILED":
+    case actions.MOVIE_CATEGORY_FAILED:
       return {
         ...state,
         nowPlaying: [],
@@ -74,48 +76,31 @@ export const categoryReducers = (
 };
 
 export const selectedMovieReducers = (
-  state = { movieDetails: {}, isLoading: true },
+  state = {
+    movieDetails: {},
+    similarMovies: [],
+    accountStates: {},
+    isLoading: true,
+  },
   action
 ) => {
   switch (action.type) {
-    case "MOVIE_DETAILS_REQUEST":
+    case actions.MOVIE_DETAILS_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case "MOVIE_DETAILS_SUCCESS":
+    case actions.MOVIE_DETAILS_SUCCESS:
       return {
         ...state,
-        movieDetails: action.payload,
+        movieDetails: action.payload.selectedMovie,
+        similarMovies: action.payload.similarMovies,
+        accountStates: action.payload.accountStates,
         isLoading: false,
       };
-    case "MOVIE_DETAILS_FAILED":
+    case actions.MOVIE_DETAILS_FAILED:
       return { ...state, movieDetails: [], isLoading: false };
     default:
       return state;
   }
 };
-
-export const similarMoviesReducers = (
-  state = { similarMovies: [], isLoading: true },
-  action
-) => {
-  switch (action.type) {
-    case "SIMILAR_MOVIES_REQUEST":
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case "SIMILAR_MOVIES_SUCCESS":
-      return {
-        ...state,
-        similarMovies: action.payload,
-        isLoading: false,
-      };
-    case "SIMILAR_MOVIES_FAILED":
-      return { ...state, similarMovies: [], isLoading: false };
-    default:
-      return state;
-  }
-};
-

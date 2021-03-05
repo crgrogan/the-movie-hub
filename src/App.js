@@ -23,8 +23,6 @@ import Profile from "./components/Profile/Profile";
 import { getUser } from "./actions/authActions";
 import { getGenres } from "./actions/movieActions";
 
-// import { checkCookies } from "./actions/authActions";
-
 function App() {
   const dispatch = useDispatch();
   const { sessionId } = useSelector((state) => state.session);
@@ -35,7 +33,7 @@ function App() {
     dispatch(getGenres());
   }, []);
 
-  function PrivateRoute({ component: Component, authed, ...rest }) {
+  const PrivateRoute = ({ component: Component, authed, ...rest }) => {
     let sessionId = Cookie.get("tmh_session_id");
     return (
       <Route
@@ -51,7 +49,7 @@ function App() {
         }
       />
     );
-  }
+  };
 
   return (
     <Router>
@@ -64,6 +62,10 @@ function App() {
           <Route path="/actors/:id" component={ActorDetails} />
           <Route path="/search/:q?" component={SearchResults} />
           <Route path="/discover/:filter?" component={Discover} />
+          {/* <Route
+            path="/discover/:filter?"
+            render={(props) => <Discover {...props} key={uuidv4()} />}
+          /> */}
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <PrivateRoute

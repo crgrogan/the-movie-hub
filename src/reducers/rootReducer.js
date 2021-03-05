@@ -7,8 +7,8 @@ import {
   genresReducers,
   categoryReducers,
   selectedMovieReducers,
-  similarMoviesReducers,
 } from "./movieReducers";
+import { accountListsReducers } from "./userReducers";
 
 const rootReducer = combineReducers({
   session: sessionReducers,
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   categories: categoryReducers,
   actor: actorReducers,
   selectedMovie: selectedMovieReducers,
-  similarMovies: similarMoviesReducers,
+  updateLists: accountListsReducers,
 });
 
 export default rootReducer;

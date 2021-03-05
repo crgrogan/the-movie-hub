@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+import * as actions from "./types";
 import { getLists } from "./movieActions";
 
 export const getToken = () => async (dispatch) => {
@@ -9,7 +10,7 @@ export const getToken = () => async (dispatch) => {
   );
   const token = res.data.request_token;
   window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`;
-  return dispatch({ type: "GET_TOKEN" });
+  return dispatch({ type: actions.GET_TOKEN });
 };
 
 export const getSession = (token) => async (dispatch) => {
@@ -23,7 +24,7 @@ export const getSession = (token) => async (dispatch) => {
     if (session.status === 200) {
       Cookies.set("tmh_session_id", session.data.session_id);
       dispatch({
-        type: "SET_SESSION_ID",
+        type: actions.SET_SESSION_ID,
         payload: session.data.session_id,
       });
       return dispatch(getUser(session.data.session_id));
@@ -37,7 +38,7 @@ export const getSession = (token) => async (dispatch) => {
 
 export const getUser = (sessionId) => async (dispatch) => {
   dispatch({
-    type: "USER_INFO_REQUEST",
+    type: actions.USER_INFO_REQUEST,
   });
   try {
     let user = await axios.get(
@@ -53,7 +54,7 @@ export const getUser = (sessionId) => async (dispatch) => {
       `https://api.themoviedb.org/3/account/${user.data.id}/watchlist/movies?api_key=${process.env.REACT_APP_TMDB_API_KEY}&session_id=${sessionId}&language=en-US&sort_by=created_at.asc&page=1`
     );
     dispatch({
-      type: "USER_INFO_SUCCESS",
+      type: actions.USER_INFO_SUCCESS,
       payload: {
         userInfo: user.data,
         favouritesList: favouritesList.data,
@@ -62,7 +63,7 @@ export const getUser = (sessionId) => async (dispatch) => {
       },
     });
   } catch (err) {
-    return dispatch({ type: "USER_INFO_FAILED", payload: err.message });
+    return dispatch({ type: actions.USER_INFO_FAILED, payload: err.message });
   }
 };
 

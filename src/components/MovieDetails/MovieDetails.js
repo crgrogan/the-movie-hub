@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import Glide from "@glidejs/glide";
@@ -8,35 +8,34 @@ import "./MovieDetails.scss";
 import defaultPerson from "../../images/default-person.png";
 import defaultPoster from "../../images/default-poster.jpg";
 import defaultBackdrop from "../../images/default-backdrop.jpg";
-import { getGenre } from "../../utils";
-import { getSelectedMovie, getSimilarMovies } from "../../actions/movieActions";
-import { useComponentWillMount } from "../../customHooks";
+
+import { useComponentWillMount, useDidMountEffect } from "../../customHooks";
+import Carousel from "../Carousel/Carousel";
+import { getSelectedMovie } from "../../actions/movieActions";
+import { updateAccountLists } from "../../actions/userActions";
 
 const MovieDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { movieDetails, isLoading } = useSelector(
-    (state) => state.selectedMovie
-  );
-  const { similarMovies, isLoading: similarMoviesLoading } = useSelector(
-    (state) => state.similarMovies
-  );
-  const { genresList } = useSelector((state) => state.genres);
+  const {
+    movieDetails,
+    similarMovies,
+    accountStates,
+    isLoading: selectedMovieLoading,
+  } = useSelector((state) => state.selectedMovie);
+  const favouriteIconRef = useRef();
+  const watchlistIconRef = useRef();
+  const ratedIconRef = useRef();
 
   useComponentWillMount(() => {
-    console.log("will mount");
     dispatch(getSelectedMovie(id));
-    dispatch(getSimilarMovies(id));
   });
 
   useEffect(async () => {
     const glideCast = document.querySelectorAll(".glide-cast");
     const glideTrailers = document.querySelectorAll(".glide-trailers");
-    const glideSimilarMovies = document.querySelectorAll(
-      ".glide-similar-movies"
-    );
-    console.log(glideCast);
+
     glideCast &&
       glideCast.forEach((item) => {
         new Glide(item, {
@@ -55,24 +54,46 @@ const MovieDetails = () => {
           gap: 25,
         }).mount();
       });
-    glideSimilarMovies &&
-      glideSimilarMovies.forEach((item) => {
-        new Glide(item, {
-          type: "carousel",
-          startAt: 0,
-          perView: 7,
-          gap: 25,
-        }).mount();
-      });
-  }, [isLoading]);
+    if (!selectedMovieLoading) {
+      checkAccountLists();
+    }
+  }, [selectedMovieLoading]);
+
+  const checkAccountLists = () => {
+    if (accountStates.favorite) {
+      favouriteIconRef.current.classList.add("active");
+    } else {
+      favouriteIconRef.current.classList.remove("active");
+    }
+    if (accountStates.rated) {
+      ratedIconRef.current.classList.add("active");
+    } else {
+      ratedIconRef.current.classList.remove("active");
+    }
+    if (accountStates.watchlist) {
+      watchlistIconRef.current.classList.add("active");
+    } else {
+      watchlistIconRef.current.classList.remove("active");
+    }
+  };
 
   const goBack = () => {
     history.goBack();
   };
 
+  const updateList = (e, listType, movieId) => {
+    if (e.target.parentElement.classList.contains("active")) {
+      dispatch(updateAccountLists(listType, movieId, false));
+      e.target.parentElement.classList.remove("active");
+    } else {
+      dispatch(updateAccountLists(listType, movieId, true));
+      e.target.parentElement.classList.add("active");
+    }
+  };
+
   return (
     <div className="selected-movie-container">
-      {isLoading ? (
+      {selectedMovieLoading ? (
         <div className="loader-container">
           <Loader type="Puff" color="#faed26" height={100} width={100} />
         </div>
@@ -117,7 +138,7 @@ const MovieDetails = () => {
                     |
                     {movieDetails.vote_count !== 0 ? (
                       <span className="selected-movie-rating">
-                        {movieDetails.vote_average}{" "}
+                        {movieDetails.vote_average}
                         <i className="fa fa-star"></i>
                       </span>
                     ) : (
@@ -131,8 +152,28 @@ const MovieDetails = () => {
                     </span>
                   </li>
                 </ul>
+                <div className="user-actions">
+                  <button
+                    data-title="Add to Watchlist"
+                    onClick={(e) => updateList(e, "watchlist", id)}
+                    ref={watchlistIconRef}
+                  >
+                    <i className="fa fa-bookmark watchlist-icon"></i>
+                  </button>
+                  <button
+                    data-title="Add to Favourites"
+                    onClick={(e) => updateList(e, "favorite", id)}
+                    ref={favouriteIconRef}
+                  >
+                    <i className="fa fa-heart favourite-icon"></i>
+                  </button>
+                  <button data-title="Rate Movie" ref={ratedIconRef}>
+                    <i className="fa fa-star rated-icon"></i>
+                  </button>
+                </div>
               </div>
             </section>
+
             <section className="overview mb-5">
               <h2>Overview</h2>
               <p>{movieDetails.overview}</p>
@@ -241,50 +282,8 @@ const MovieDetails = () => {
               )}
             </section>
             <section className="similar-movies mb-5">
-              <h2>Similar Movies</h2>
               {similarMovies && similarMovies.length > 0 ? (
-                <div className={"glide glide-similar-movies"}>
-                  <div className="glide__track" data-glide-el="track">
-                    <ul className="glide__slides">
-                      {similarMovies.map((movie) => (
-                        <li key={movie.id} className="glide__slide">
-                          <Link to={`/movies/${movie.id}`}>
-                            <img
-                              src={
-                                movie.poster_path
-                                  ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
-                                  : defaultPoster
-                              }
-                              alt="Poster for movie"
-                            />
-                            <h4>{movie.title}</h4>
-                            <h5>{getGenre(movie.genre_ids[0], genresList)}</h5>
-                            {movie.vote_count !== 0 ? (
-                              <span className="rating">
-                                {movie.vote_average}{" "}
-                                <i className="fa fa-star"></i>
-                              </span>
-                            ) : null}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="glide__arrows" data-glide-el="controls">
-                    <button
-                      className="glide__arrow glide__arrow--left"
-                      data-glide-dir="<"
-                    >
-                      <i className="fa fa-angle-left slider-arrow"></i>
-                    </button>
-                    <button
-                      className="glide__arrow glide__arrow--right"
-                      data-glide-dir=">"
-                    >
-                      <i className="fa fa-angle-right slider-arrow"></i>
-                    </button>
-                  </div>
-                </div>
+                <Carousel title="Similar-Movies" moviesList={similarMovies} />
               ) : (
                 <p className="nothing-to-display">
                   No Similar Movies to display

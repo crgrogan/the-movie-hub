@@ -64,7 +64,7 @@ button {
   position: absolute;
   padding: 5px 10px;
   font-size: 12px;
-  bottom: -35px;
+  bottom: -40px;
   right: -10px;
   border-radius: 5px;
   white-space: nowrap;
@@ -75,6 +75,7 @@ button {
 
 [data-title] {
   position: relative;
+  font-family: $primary-font;
 }
 
 .container {

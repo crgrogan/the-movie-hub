@@ -6,9 +6,9 @@ footer {
   bottom: 0;
   right: 0;
   width: 100%;
-  padding: 3rem 5rem 0 5rem;
+  padding: 3rem 5rem;
   background-color: $secondary-color;
-  height: 200px;
+  height: 190px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "info navigate endorse";
@@ -57,7 +57,6 @@ footer {
 
   ul {
     list-style-type: none;
-    margin-bottom: 50px;
   }
 
   li {
@@ -106,4 +105,5 @@ footer {
   grid-row-end: span 3;
   font-size: 1.4rem;
   padding: 10px;
+  margin-top: 40px;
 }

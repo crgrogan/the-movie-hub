@@ -7,9 +7,9 @@ import Loader from "react-loader-spinner";
 import "./Discover.scss";
 import defaultPoster from "../../images/default-poster.jpg";
 import { getGenre } from "../../utils";
-import { useComponentWillMount } from "../../customHooks";
+import { useComponentWillMount, useDidMountEffect } from "../../customHooks";
 
-const Discover = () => {
+const Discover = (props) => {
   const history = useHistory();
   const location = useLocation();
   const sortOptions = [
@@ -42,11 +42,8 @@ const Discover = () => {
     );
   };
 
-  // change discoverResults from discoverRes.data.results to discoverRes.data
-  // replace discoverResults with discoverResults.results
-  // use discoverRes.total_pages to check total max pages
-
   useComponentWillMount(async () => {
+    console.log("mount");
     if (location.search) {
       let params = new URLSearchParams(location.search);
       let page = params.get("page");
@@ -77,6 +74,27 @@ const Discover = () => {
       setLoading(false);
     }
   });
+
+  useDidMountEffect(async () => {
+    if (props.location.refresh) {
+      setLoading(true);
+      setSortBy("popularity.desc");
+      setVoteAverage("");
+      setGenre("");
+      setYear("");
+      setPage(1);
+      let discoverRes = await getDiscoverResults({
+        page: 1,
+        sortBy: "popularity.desc",
+        year: "",
+        voteAverage: "",
+        genre: "",
+      });
+      setDiscoverResults(discoverRes.data);
+      setDisplayNavigation(false);
+      setLoading(false);
+    }
+  }, [props.location]);
 
   useEffect(() => {
     if (!genre) {
@@ -133,7 +151,6 @@ const Discover = () => {
       voteAverage,
       genre,
     });
-    console.log(discoverRes.data);
     setDiscoverResults(discoverRes.data);
     setDisplayNavigation(true);
     setLoading(false);
