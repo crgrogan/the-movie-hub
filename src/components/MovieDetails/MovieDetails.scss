@@ -86,7 +86,9 @@
     }
 
     .user-actions {
-      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
 
       button {
         background: transparent;
@@ -101,6 +103,10 @@
 
       & i:hover {
         cursor: pointer;
+      }
+
+      .delete-rating-btn {
+        margin-left: 10px;
       }
 
       .active {

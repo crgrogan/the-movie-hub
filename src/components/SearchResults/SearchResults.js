@@ -33,7 +33,6 @@ const SearchResults = () => {
   });
 
   useDidMountEffect(() => {
-    console.log("changePage");
     setCurrentPage(page);
   }, [page]);
 

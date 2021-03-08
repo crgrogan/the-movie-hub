@@ -1,29 +1,35 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import Glide from "@glidejs/glide";
 import Loader from "react-loader-spinner";
+import StarsRating from "stars-rating";
 
 import "./MovieDetails.scss";
 import defaultPerson from "../../images/default-person.png";
 import defaultPoster from "../../images/default-poster.jpg";
 import defaultBackdrop from "../../images/default-backdrop.jpg";
-
 import { useComponentWillMount, useDidMountEffect } from "../../customHooks";
 import Carousel from "../Carousel/Carousel";
 import { getSelectedMovie } from "../../actions/movieActions";
-import { updateAccountLists } from "../../actions/userActions";
+import {
+  updateAccountLists,
+  rateMovie,
+  removeRating,
+} from "../../actions/userActions";
 
-const MovieDetails = () => {
+const MovieDetails = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [rating, setRating] = useState(0);
   const {
     movieDetails,
     similarMovies,
     accountStates,
     isLoading: selectedMovieLoading,
   } = useSelector((state) => state.selectedMovie);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const favouriteIconRef = useRef();
   const watchlistIconRef = useRef();
   const ratedIconRef = useRef();
@@ -31,6 +37,10 @@ const MovieDetails = () => {
   useComponentWillMount(() => {
     dispatch(getSelectedMovie(id));
   });
+
+  useDidMountEffect(() => {
+    dispatch(getSelectedMovie(props.match.params.id));
+  }, [props.match.params.id]);
 
   useEffect(async () => {
     const glideCast = document.querySelectorAll(".glide-cast");
@@ -60,20 +70,34 @@ const MovieDetails = () => {
   }, [selectedMovieLoading]);
 
   const checkAccountLists = () => {
-    if (accountStates.favorite) {
-      favouriteIconRef.current.classList.add("active");
-    } else {
-      favouriteIconRef.current.classList.remove("active");
-    }
-    if (accountStates.rated) {
-      ratedIconRef.current.classList.add("active");
-    } else {
-      ratedIconRef.current.classList.remove("active");
-    }
-    if (accountStates.watchlist) {
-      watchlistIconRef.current.classList.add("active");
-    } else {
-      watchlistIconRef.current.classList.remove("active");
+    if (accountStates) {
+      if (accountStates.favorite) {
+        favouriteIconRef.current.classList.add("active");
+        favouriteIconRef.current.setAttribute(
+          "data-title",
+          "Remove from Favourites"
+        );
+      } else {
+        favouriteIconRef.current.classList.remove("active");
+        favouriteIconRef.current.setAttribute(
+          "data-title",
+          "Add to Favourites"
+        );
+      }
+      if (accountStates.rated) {
+        console.log(accountStates.rated.value);
+        setRating(accountStates.rated.value / 2);
+      }
+      if (accountStates.watchlist) {
+        watchlistIconRef.current.classList.add("active");
+        watchlistIconRef.current.setAttribute(
+          "data-title",
+          "Remove from Watchlist"
+        );
+      } else {
+        watchlistIconRef.current.classList.remove("active");
+        watchlistIconRef.current.setAttribute("data-title", "Add to Watchlist");
+      }
     }
   };
 
@@ -81,14 +105,44 @@ const MovieDetails = () => {
     history.goBack();
   };
 
-  const updateList = (e, listType, movieId) => {
+  const updateWatchlist = (e, listType, movieId) => {
     if (e.target.parentElement.classList.contains("active")) {
       dispatch(updateAccountLists(listType, movieId, false));
       e.target.parentElement.classList.remove("active");
+      e.target.parentElement.setAttribute("data-title", "Add to Watchlist");
     } else {
       dispatch(updateAccountLists(listType, movieId, true));
       e.target.parentElement.classList.add("active");
+      e.target.parentElement.setAttribute(
+        "data-title",
+        "Remove from Watchlist"
+      );
     }
+  };
+
+  const updateFavourites = (e, listType, movieId) => {
+    if (e.target.parentElement.classList.contains("active")) {
+      dispatch(updateAccountLists(listType, movieId, false));
+      e.target.parentElement.classList.remove("active");
+      e.target.parentElement.setAttribute("data-title", "Add to Favourites");
+    } else {
+      dispatch(updateAccountLists(listType, movieId, true));
+      e.target.parentElement.classList.add("active");
+      e.target.parentElement.setAttribute(
+        "data-title",
+        "Remove from Favourites "
+      );
+    }
+  };
+
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+    dispatch(rateMovie(newRating * 2, id));
+  };
+
+  const deleteRating = () => {
+    dispatch(removeRating(id));
+    setRating(0);
   };
 
   return (
@@ -152,28 +206,48 @@ const MovieDetails = () => {
                     </span>
                   </li>
                 </ul>
-                <div className="user-actions">
+
+                <div
+                  className="user-actions"
+                  style={
+                    isLoggedIn
+                      ? { visibility: "visible" }
+                      : { visibility: "hidden" }
+                  }
+                >
                   <button
-                    data-title="Add to Watchlist"
-                    onClick={(e) => updateList(e, "watchlist", id)}
+                    onClick={(e) => updateWatchlist(e, "watchlist", id)}
                     ref={watchlistIconRef}
                   >
                     <i className="fa fa-bookmark watchlist-icon"></i>
                   </button>
                   <button
                     data-title="Add to Favourites"
-                    onClick={(e) => updateList(e, "favorite", id)}
+                    onClick={(e) => updateFavourites(e, "favorite", id)}
                     ref={favouriteIconRef}
                   >
                     <i className="fa fa-heart favourite-icon"></i>
                   </button>
-                  <button data-title="Rate Movie" ref={ratedIconRef}>
-                    <i className="fa fa-star rated-icon"></i>
-                  </button>
+                  <span>
+                    <StarsRating
+                      ref={ratedIconRef}
+                      count={5}
+                      onChange={ratingChanged}
+                      size={32}
+                      className="stars-rating"
+                      color1={"#fff"}
+                      color2={"#faed26"}
+                      value={rating}
+                    />
+                  </span>
+                  {rating > 0 && (
+                    <button data-title="Delete Rating" onClick={deleteRating}>
+                      <i className="fa fa-minus-square delete-rating-btn"></i>
+                    </button>
+                  )}
                 </div>
               </div>
             </section>
-
             <section className="overview mb-5">
               <h2>Overview</h2>
               <p>{movieDetails.overview}</p>

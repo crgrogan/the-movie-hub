@@ -78,13 +78,12 @@ export const getMovieCategories = () => async (dispatch) => {
 };
 
 export const getSelectedMovie = (movieId) => async (dispatch, getState) => {
-  console.log("get selected");
-
   dispatch({
     type: actions.MOVIE_DETAILS_REQUEST,
   });
 
   try {
+    let accountStatesRes;
     const {
       session: { sessionId },
     } = getState();
@@ -94,15 +93,17 @@ export const getSelectedMovie = (movieId) => async (dispatch, getState) => {
     let similarMoviesRes = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
     );
-    let accountStatesRes = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/account_states?api_key=${process.env.REACT_APP_TMDB_API_KEY}&session_id=${sessionId}`
-    );
+    if (sessionId) {
+      accountStatesRes = await axios.get(
+        `https://api.themoviedb.org/3/movie/${movieId}/account_states?api_key=${process.env.REACT_APP_TMDB_API_KEY}&session_id=${sessionId}`
+      );
+    }
     dispatch({
       type: actions.MOVIE_DETAILS_SUCCESS,
       payload: {
         selectedMovie: selectedMovieRes.data,
         similarMovies: similarMoviesRes.data.results,
-        accountStates: accountStatesRes.data,
+        accountStates: accountStatesRes ? accountStatesRes.data : null,
       },
     });
   } catch (err) {
