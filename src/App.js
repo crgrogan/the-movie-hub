@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ScrollRestoration from "react-scroll-restoration";
 import Cookie from "js-cookie";
@@ -62,10 +57,6 @@ function App() {
           <Route path="/actors/:id" component={ActorDetails} />
           <Route path="/search/:q?" component={SearchResults} />
           <Route path="/discover/:filter?" component={Discover} />
-          {/* <Route
-            path="/discover/:filter?"
-            render={(props) => <Discover {...props} key={uuidv4()} />}
-          /> */}
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <PrivateRoute
