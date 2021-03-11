@@ -1,6 +1,6 @@
 @import "../../styles/config";
 
-footer {
+/* footer {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -14,6 +14,10 @@ footer {
   grid-template-areas: "info navigate endorse";
   grid-template-rows: 3fr 1fr;
   align-items: center;
+}
+
+.footer-container {
+  display: flex;
 }
 
 .info {
@@ -106,4 +110,159 @@ footer {
   font-size: 1.4rem;
   padding: 10px;
   margin-top: 40px;
+} */
+
+footer {
+  width: 100%;
+  background: $secondary-color;
+  color: $primary-font-color;
+  padding: 50px;
+}
+
+.footer-main-content {
+  display: flex;
+}
+
+.footer-left,
+.footer-right,
+.footer-center {
+  flex-basis: 50%;
+  /*   display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+}
+
+.footer-main-content a {
+  text-decoration: none;
+  color: $primary-font-color;
+}
+
+.footer-main-content h1 {
+  margin-bottom: 0.5em;
+}
+
+.footer-main-content h3,
+h4 {
+  margin-bottom: 1em;
+}
+
+/* Footer-left */
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-left i {
+  background-color: $primary-color;
+  color: $primary-font-color;
+  font-size: 25px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 42px;
+  margin: 10px 15px;
+  vertical-align: middle;
+}
+
+.footer-left i:first-child {
+  margin-left: 0;
+}
+
+.footer-left i.fa-envelope {
+  font-size: 17px;
+  line-height: 38px;
+}
+
+.website-link {
+  color: $tertiary-color;
+}
+
+/* Footer-center */
+
+.footer-center h1 {
+  color: $tertiary-color;
+}
+
+.footer-center {
+  text-align: center;
+}
+.footer-links {
+  color: $primary-font-color;
+  font-weight: bold;
+  margin: 20px 0 12px 0;
+}
+
+.copyright {
+  color: $primary-font-color;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* Footer-right */
+
+.footer-right .movieDBLogo {
+  margin: 0 auto;
+  img {
+    height: 75px;
+    width: 75px;
+  }
+}
+
+.footer-right p {
+  width: 50%;
+  margin: auto;
+}
+
+.footer-right p {
+  color: $primary-font-color;
+  font-size: 14px;
+}
+
+.footer-right {
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  /*   footer {
+    position: absolute;
+    bottom: 0px;
+  } */
+  .footer-main-content {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .footer-left,
+  .footer-center {
+    border-bottom: 1px solid $tertiary-color;
+    padding: 25px 0;
+    margin: 0 50px;
+  }
+
+  .footer-left {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  /* footer {
+    position: absolute;
+    bottom: 0;
+  } */
+  .footer-main-content {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .footer-left,
+  .footer-center {
+    border-bottom: 1px solid $tertiary-color;
+    padding: 25px 0;
+    margin: 0;
+  }
+
+  .footer-right p {
+    width: 100%;
+  }
 }

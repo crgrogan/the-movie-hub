@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Glide from "@glidejs/glide";
+import Glide, { Breakpoints } from "@glidejs/glide/dist/glide.modular.esm";
 
 import "./Carousel.scss";
 import defaultPoster from "../../images/default-poster.jpg";
@@ -9,8 +9,20 @@ import { getGenre } from "../../utils";
 
 const Carousel = (props) => {
   const { genresList } = useSelector((state) => state.genres);
+  const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(async () => {
+  useEffect(() => {
+    mountSlide();
+    const handleWindowResize = () => {
+      setWidth(window.innerWidth);
+      mountSlide();
+    };
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  const mountSlide = () => {
     const sliders = document.querySelectorAll(`.glide-${props.title}`);
 
     sliders.forEach((item) => {
@@ -18,10 +30,18 @@ const Carousel = (props) => {
         type: "carousel",
         startAt: 0,
         perView: 7,
+        breakpoints: {
+          576: {
+            perView: 2,
+          },
+          768: {
+            perView: 4,
+          },
+        },
         gap: 25,
-      }).mount();
+      }).mount({ Breakpoints });
     });
-  }, []);
+  };
 
   return (
     <section className="slider">

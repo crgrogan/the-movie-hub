@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,10 +9,6 @@ import { keywordSearch } from "../../actions/movieActions";
 const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const navLinks = useRef();
-  const form = useRef();
-  const openMenuBtn = useRef();
-  const closeMenuBtn = useRef();
   const [query, setQuery] = useState("");
   const [username, setUsername] = useState("");
   const [validationError, setValidationError] = useState(false);
@@ -67,7 +63,6 @@ const Navbar = () => {
         className={
           searchbarOpen ? "form-container search-open" : "form-container"
         }
-        ref={form}
       >
         <form className="search-container" onSubmit={submitQuery}>
           <div className="search-bar">
@@ -85,12 +80,9 @@ const Navbar = () => {
           </div>
         </form>
       </div>
-      <ul
-        className={menuOpen ? "nav-links nav-links-open" : "nav-links"}
-        ref={navLinks}
-      >
+      <ul className={menuOpen ? "nav-links nav-links-open" : "nav-links"}>
         <li>
-          <Link to="/" data-title="Home">
+          <Link to="/" data-title={menuOpen ? null : "Home"}>
             {menuOpen ? <div>Home</div> : <i className="fa fa-home"></i>}
           </Link>
         </li>
@@ -102,13 +94,13 @@ const Navbar = () => {
                 ? { pathname: "/discover", refresh: true }
                 : { pathname: "/discover" }
             }
-            data-title="Discover"
+            data-title={menuOpen ? null : "Discover"}
           >
             {menuOpen ? <div>Discover</div> : <i className="fa fa-eye"></i>}
           </Link>
         </li>
         <li>
-          <Link to="/profile" data-title="Profile">
+          <Link to="/profile" data-title={menuOpen ? null : "Profile"}>
             {menuOpen ? (
               <div>Profile</div>
             ) : (
@@ -123,18 +115,10 @@ const Navbar = () => {
         )} */}
       </ul>
       <div className="burger burger-menu">
-        <div
-          className={menuOpen ? "hidden" : ""}
-          ref={openMenuBtn}
-          onClick={toggleMenu}
-        >
+        <div className={menuOpen ? "hidden" : ""} onClick={toggleMenu}>
           <i className="fa fa-bars"></i>
         </div>
-        <div
-          className={menuOpen ? "" : "hidden"}
-          ref={closeMenuBtn}
-          onClick={toggleMenu}
-        >
+        <div className={menuOpen ? "" : "hidden"} onClick={toggleMenu}>
           <i class="fa fa-times"></i>
         </div>
       </div>
@@ -142,62 +126,12 @@ const Navbar = () => {
         <div className={searchbarOpen ? "hidden" : ""} onClick={toggleSearch}>
           <i class="fa fa-search"></i>
         </div>
-        <div
-          className={searchbarOpen ? "" : "hidden"}
-          ref={closeMenuBtn}
-          onClick={toggleSearch}
-        >
+        <div className={searchbarOpen ? "" : "hidden"} onClick={toggleSearch}>
           <i class="fa fa-times"></i>
         </div>
       </div>
     </nav>
   );
-  {
-    /* <div className="navbar">
-      <Link to="/" className="logo">
-        <img src={logo} alt="The Movie Hub Logo" />
-      </Link>
-      <form className="search-container" onSubmit={submitQuery}>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search..."
-            name="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="keyword-input"
-          />
-          <button type="submit">
-            <i className="fa fa-search"></i>
-          </button>
-        </div>
-      </form>
-      <div className="links">
-        <h2>{username}</h2>
-        <NavLink className="laptop-screen" to="/" data-title="Home">
-          <i className="fa fa-home"></i>
-        </NavLink>
-        <NavLink className="laptop-screen" to="/profile" data-title="Profile">
-          <i className="fa fa-user-circle"></i>
-        </NavLink>
-        <NavLink
-          className="laptop-screen"
-          to={
-            location.pathname === "/discover" ||
-            location.pathname === "/discover/filter"
-              ? { pathname: "/discover", refresh: true }
-              : { pathname: "/discover" }
-          }
-          data-title="Discover"
-        >
-          <i className="fa fa-eye"></i>
-        </NavLink>
-        <NavLink to="#" className="menuIcon">
-          <i className="fa fa-bars"></i>
-        </NavLink>
-      </div>
-    </div> */
-  }
 };
 
 export default Navbar;

@@ -27,7 +27,7 @@ const SearchResults = () => {
     if (!isLoading) {
       let str = location.search.split("?q=")[1];
       let query = str.split("&page=")[0];
-      let pageNumber = str.split("&page=")[1];
+      let pageNumber = Number(str.split("&page=")[1]);
       dispatch(keywordSearch(query, pageNumber));
     }
   });
