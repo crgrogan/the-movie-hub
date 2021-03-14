@@ -23,6 +23,24 @@ const Login = () => {
   return (
     <div className="login-container">
       <section className="login-modal">
+        <form onSubmit={submitHandler} className="login-form">
+          {/*  <h1>
+            Welcome Back To <br /> The Movie Hub
+          </h1> */}
+          <img src={logo} alt="The Movie Hub logo" />
+          <button type="submit" className="submit-login-form-btn">
+            Login
+          </button>
+        </form>
+      </section>
+      <button onClick={goBack} className="back-btn">
+        <i className="fa fa-arrow-left"></i>
+      </button>
+    </div>
+  );
+  {
+    /* <div className="login-container">
+      <section className="login-modal">
         <div className="modal-image">
           <h1>
             Welcome Back To <br /> The Movie Hub
@@ -38,8 +56,8 @@ const Login = () => {
       <button onClick={goBack} className="back-btn">
         <i className="fa fa-arrow-left"></i>
       </button>
-    </div>
-  );
+    </div> */
+  }
 };
 
 export default Login;

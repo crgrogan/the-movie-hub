@@ -13,6 +13,11 @@ nav {
   min-height: 75px;
   padding: 0 4rem;
 
+  .logo a {
+    display: flex;
+    align-items: center;
+  }
+
   .nav-links {
     width: 100%;
     display: flex;

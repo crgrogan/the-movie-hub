@@ -43,13 +43,20 @@ const Profile = () => {
         <>
           <section className="profile-header">
             <div className="profile-banner">
-              <div className="profile-avatar">
+              {/* <div className="profile-avatar">
                 <span>
                   {userInfo.username && userInfo.username[0].toUpperCase()}
                 </span>
+              </div> */}
+              <div className="username-container">
+                <h1 className="profile-username">{userInfo.username}</h1>
+                <div className="profile-logout-container">
+                  <button className="logout-button" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
               </div>
               <div className="profile-info">
-                <h1 className="profile-username">{userInfo.username}</h1>
                 <div className="list-count">
                   <span className="list-count-bubble">
                     {favouritesList.total_results}
@@ -69,11 +76,11 @@ const Profile = () => {
                   <span className="list-count-title">Watchlist</span>
                 </div>
               </div>
-              <div>
+              {/* <div className="profile-logout-container">
                 <button className="logout-button" onClick={handleLogout}>
                   Logout
                 </button>
-              </div>
+              </div> */}
             </div>
             <div className="profile-navbar">
               <ul>
@@ -83,7 +90,12 @@ const Profile = () => {
                 >
                   Favourites
                 </li>
-                <li onClick={(e) => changeList(e, "ratings")}>Ratings</li>
+                <li
+                  className="ratings-li"
+                  onClick={(e) => changeList(e, "ratings")}
+                >
+                  Ratings
+                </li>
                 <li onClick={(e) => changeList(e, "watchlist")}>Watchlist</li>
               </ul>
             </div>

@@ -26,14 +26,16 @@
     margin-bottom: 80px;
 
     .discover-filters {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      // justify-content: space-between;
       align-items: center;
       margin: 20px 0;
+      gap: 5%;
+      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
 
       input,
       select {
-        width: 22%;
+        width: 100%;
         padding: 8px;
         font-size: 1.1em;
         height: 40px;
@@ -71,7 +73,7 @@
   .discover-results-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 70px;
+    gap: 50px 5%;
     list-style-type: none;
   }
 
@@ -146,6 +148,32 @@
       color: $tertiary-color;
       font-size: 3.5em;
       border: none;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .discover-container {
+    .discover-results-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .discover-container {
+    .discover-results-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .discover-container {
+    width: 90%;
+
+    .discover-results-list {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

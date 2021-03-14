@@ -6,20 +6,25 @@
   .profile-header {
     .profile-banner {
       display: grid;
-      grid-template-columns: 1fr 4fr 1fr;
-      align-items: center;
-      height: 250px;
+      // grid-template-columns: 1fr 4fr 1fr;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas:
+        "username"
+        "bubbles";
+      // align-items: center;
       background: linear-gradient(
         45deg,
-        $primary-color,
         $tertiary-color,
         $primary-color,
         $tertiary-color,
         $primary-color
       );
-      padding: 0 4rem;
+      gap: 1.5em;
+      padding: 3em 5em;
 
       .profile-avatar {
+        grid-area: avatar;
         display: inline-flex;
         height: 150px;
         width: 150px;
@@ -31,16 +36,27 @@
         font-size: 4em;
       }
 
+      .username-container {
+        grid-area: username;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       .profile-username {
-        margin-bottom: 25px;
-        font-size: 2em;
+        font-size: 2.75em;
+      }
+
+      .profile-info {
+        grid-area: bubbles;
+        display: flex;
       }
 
       .list-count {
         display: inline-flex;
-        align-items: center;
         justify-content: center;
-        margin-right: 50px;
+        margin-right: 2em;
+        align-items: center;
       }
 
       .list-count-bubble {
@@ -56,13 +72,21 @@
         margin-right: 10px;
       }
 
+      /* .list-count-title {
+        margin-top: 15px;
+      } */
+
+      .profile-logout-container {
+        grid-area: logout;
+      }
+
       .logout-button {
-        background-color: $secondary-color;
+        background-color: $primary-color;
         color: $primary-font-color;
         font-size: 1.2em;
-        padding: 10px 30px;
+        padding: 0.5em 1.5em;
         border-radius: 5px;
-        border: 2px solid $secondary-color;
+        border: 2px solid $primary-color;
         margin: auto;
 
         &:hover {
@@ -74,8 +98,8 @@
     .profile-navbar {
       background-color: $primary-color;
       font-weight: bold;
-      border-bottom: 1px solid $secondary-color;
-      border-top: 1px solid $secondary-color;
+      // border-bottom: 1px solid $secondary-color;
+      // border-top: 1px solid $secondary-color;
       font-size: 1.2em;
 
       ul {
@@ -85,9 +109,12 @@
       }
 
       li {
-        margin-right: 20px;
-        padding: 5px 10px;
+        padding: 0.25em 0.5em;
         cursor: pointer;
+      }
+
+      .ratings-li {
+        margin: 0 1em;
       }
 
       .active-nav-item,
@@ -105,6 +132,97 @@
     .list-heading {
       font-size: 2em;
       margin-bottom: 50px;
+    }
+  }
+}
+
+/* @media screen and (max-width: 768px) {
+  .profile-container {
+    .profile-header {
+      .profile-banner {
+        padding: 2em;
+
+        .list-count {
+          display: flex;
+        }
+      }
+    }
+  }
+} */
+
+@media screen and (max-width: 576px) {
+  .profile-container {
+    .profile-header {
+      .profile-banner {
+        padding: 1em;
+        /* display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 2em;
+        grid-template-areas:
+          "avatar info . ."
+          "logout info . ."
+          ". . . .";  */
+
+        /*   .profile-avatar {
+          grid-area: avatar;
+          display: inline-flex;
+          height: 80px;
+          width: 80px;
+          line-height: 80px;
+          border-radius: 40px;
+          font-size: 2em;
+        } */
+
+        /*  .profile-info {
+          grid-area: info;
+        } */
+        .profile-username {
+          font-size: 2em;
+        }
+
+        .logout-button {
+          font-size: 1em;
+          padding: 0.5em 1.5em;
+          border-radius: 5px;
+          border: 2px solid $primary-color;
+          margin: auto;
+
+          &:hover {
+            border: 2px solid black;
+          }
+        }
+        .profile-info {
+          flex-wrap: wrap;
+        }
+        .list-count-bubble {
+          // display: inline-flex;
+          height: 30px;
+          width: 30px;
+          line-height: 30px;
+          border: 3px solid rgb(179, 179, 179);
+          border-radius: 15px;
+          // margin: 0 10px 10px 0;
+        }
+
+        /* .profile-logout-container {
+          grid-area: logout;
+        } */
+      }
+
+      .profile-navbar {
+        li {
+          padding: 0.25em 0;
+        }
+      }
+    }
+
+    .profile-lists {
+      margin-top: 2em;
+
+      .list-heading {
+        display: none;
+      }
     }
   }
 }

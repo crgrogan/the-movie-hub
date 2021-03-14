@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Glide, { Breakpoints } from "@glidejs/glide/dist/glide.modular.esm";
+import Glide from "@glidejs/glide";
 
 import "./Carousel.scss";
 import defaultPoster from "../../images/default-poster.jpg";
@@ -9,17 +9,9 @@ import { getGenre } from "../../utils";
 
 const Carousel = (props) => {
   const { genresList } = useSelector((state) => state.genres);
-  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     mountSlide();
-    const handleWindowResize = () => {
-      setWidth(window.innerWidth);
-      mountSlide();
-    };
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
   const mountSlide = () => {
@@ -33,13 +25,17 @@ const Carousel = (props) => {
         breakpoints: {
           576: {
             perView: 2,
+            gap: 10,
           },
           768: {
             perView: 4,
           },
+          992: {
+            perView: 5,
+          },
         },
         gap: 25,
-      }).mount({ Breakpoints });
+      }).mount();
     });
   };
 

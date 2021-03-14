@@ -1,6 +1,6 @@
 @import "../../styles/config";
 
-.login-container {
+/* .login-container {
   width: 80%;
   margin: auto;
   padding: 80px 0;
@@ -9,43 +9,25 @@
     display: flex;
     margin: auto;
     height: 450px;
-    width: 700px;
+    width: 100%;
     color: $primary-color;
   }
 
   .login-form {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: center;
+    height: 100vh;
     width: 50%;
     background-color: #fff;
     padding: 30px;
     text-align: center;
-    border-radius: 0 10px 10px 0;
+    // border-radius: 0 10px 10px 0;
 
     img {
       height: 150px;
       width: 150px;
-      margin: 30px auto;
-    }
-
-    .submit-login-form-btn {
-      cursor: pointer;
-      background-color: $tertiary-color;
-      border: 3px solid $tertiary-color;
-      border-radius: 5px;
-      width: 80%;
-      text-align: center;
-      font-weight: bold;
-      padding: 1rem;
-      margin: 0 auto;
-      font-size: 1.2em;
-
-      &:hover {
-        border: 3px solid $tertiary-color;
-        background-color: #fff;
-        border-radius: 0.5rem;
-      }
+      margin-bottom: 30px;
     }
   }
 
@@ -53,16 +35,35 @@
     display: flex;
     justify-content: center;
     width: 50%;
-    height: 100%;
+    height: 100vh;
     font-size: 1.4em;
     text-align: center;
     background-image: url("../../images/login-background-image.jpg");
     background-size: cover;
-    border-radius: 10px 0 0 10px;
+    //  border-radius: 10px 0 0 10px;
 
     h1 {
       padding-top: 30px;
       font-size: 35px;
+    }
+  }
+
+  .submit-login-form-btn {
+    cursor: pointer;
+    background-color: $tertiary-color;
+    border: 3px solid $tertiary-color;
+    border-radius: 5px;
+    width: 40%;
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    margin: 0 auto;
+    font-size: 1.2em;
+
+    &:hover {
+      border: 3px solid $tertiary-color;
+      background-color: #fff;
+      border-radius: 0.5rem;
     }
   }
 
@@ -74,5 +75,89 @@
     border: none;
     background: transparent;
     cursor: pointer;
+  }
+} */
+
+.login-container {
+  width: 80%;
+  margin: auto;
+  padding: 80px 0;
+
+  .login-modal {
+    margin: 0 auto;
+    height: 450px;
+    width: 100%;
+    color: $primary-color;
+  }
+
+  .login-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 15% 0;
+    background-image: url("../../images/login-background-image.jpg");
+    background-size: cover;
+    text-align: center;
+    border-radius: 10px;
+
+    img {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      height: 40%;
+      width: 40%;
+    }
+  }
+
+  .submit-login-form-btn {
+    cursor: pointer;
+    background-color: $tertiary-color;
+    border: 3px solid $tertiary-color;
+    border-radius: 5px;
+    width: 60%;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5em;
+    margin: 0 auto;
+    font-size: 1.2em;
+
+    &:hover {
+      border: 3px solid $tertiary-color;
+      background-color: transparent;
+      border-radius: 0.5rem;
+    }
+  }
+
+  .back-btn {
+    position: absolute;
+    top: 100px;
+    color: $tertiary-color;
+    font-size: 50px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-container {
+    .login-form {
+      width: 60%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .login-container {
+    .login-form {
+      margin-top: 10%;
+      width: 80%;
+      height: 70%;
+    }
   }
 }

@@ -53,6 +53,15 @@ const MovieDetails = (props) => {
           startAt: 0,
           perView: 5,
           gap: 50,
+          breakpoints: {
+            576: {
+              perView: 2,
+              gap: 0,
+            },
+            768: {
+              perView: 4,
+            },
+          },
         }).mount();
       });
     glideTrailers &&
@@ -61,6 +70,17 @@ const MovieDetails = (props) => {
           type: "carousel",
           startAt: 0,
           perView: 3,
+          breakpoints: {
+            576: {
+              perView: 1,
+            },
+            768: {
+              perView: 2,
+            },
+            992: {
+              perView: 2,
+            },
+          },
           gap: 25,
         }).mount();
       });
@@ -177,7 +197,7 @@ const MovieDetails = (props) => {
               />
               <div className="selected-movie-headings">
                 <h1 className="selected-movie-title">{movieDetails.title}</h1>
-                <ul>
+                <ul className="big-screen">
                   <li>
                     {movieDetails.genres && movieDetails.genres[0] && (
                       <div className="selected-movie-genre">
@@ -206,6 +226,33 @@ const MovieDetails = (props) => {
                     </span>
                   </li>
                 </ul>
+                <ul className="small-screen">
+                  <li>
+                    {movieDetails.genres && movieDetails.genres[0] && (
+                      <div className="selected-movie-genre">
+                        <span>{movieDetails.genres[0].name}</span>{" "}
+                        {movieDetails.genres.length > 1 && (
+                          <span>/ {movieDetails.genres[1].name}</span>
+                        )}
+                      </div>
+                    )}
+                  </li>
+                  <li>
+                    {movieDetails.vote_count !== 0 ? (
+                      <span className="selected-movie-rating">
+                        {movieDetails.vote_average}
+                        <i className="fa fa-star"></i>
+                      </span>
+                    ) : (
+                      <span className="selected-movie-rating">Not Rated</span>
+                    )}
+                  </li>
+                  <li>
+                    <span className="selected-movie-rating">
+                      {movieDetails.runtime} mins
+                    </span>
+                  </li>
+                </ul>
 
                 <div
                   className="user-actions"
@@ -218,6 +265,7 @@ const MovieDetails = (props) => {
                   <button
                     onClick={(e) => updateWatchlist(e, "watchlist", id)}
                     ref={watchlistIconRef}
+                    className="watchlist-icon"
                   >
                     <i className="fa fa-bookmark watchlist-icon"></i>
                   </button>
@@ -228,7 +276,7 @@ const MovieDetails = (props) => {
                   >
                     <i className="fa fa-heart favourite-icon"></i>
                   </button>
-                  <span>
+                  <span className="user-ratings-container">
                     <StarsRating
                       ref={ratedIconRef}
                       count={5}
@@ -239,12 +287,12 @@ const MovieDetails = (props) => {
                       color2={"#faed26"}
                       value={rating}
                     />
+                    {rating > 0 && (
+                      <button data-title="Delete Rating" onClick={deleteRating}>
+                        <i className="fa fa-minus-square delete-rating-btn"></i>
+                      </button>
+                    )}
                   </span>
-                  {rating > 0 && (
-                    <button data-title="Delete Rating" onClick={deleteRating}>
-                      <i className="fa fa-minus-square delete-rating-btn"></i>
-                    </button>
-                  )}
                 </div>
               </div>
             </section>
@@ -308,8 +356,8 @@ const MovieDetails = (props) => {
                         .map((trailer) => (
                           <li key={trailer.id} className="glide__slide">
                             <iframe
-                              width="320"
-                              height="240"
+                              width="240"
+                              height="180"
                               src={`https://www.youtube.com/embed/${trailer.source}`}
                             ></iframe>
                           </li>

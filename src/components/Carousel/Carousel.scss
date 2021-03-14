@@ -68,6 +68,7 @@
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      margin-bottom: 0.5em;
     }
 
     img {
@@ -96,5 +97,13 @@
     bottom: 50px;
     font-size: 8rem;
     color: $tertiary-color;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .slider {
+    .glide__slides {
+      padding: 3rem 0;
+    }
   }
 }

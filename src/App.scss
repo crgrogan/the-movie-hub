@@ -80,12 +80,15 @@ button {
 
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   padding-bottom: 0; /* Footer height */
 }
 
 .content-wrap {
   padding-top: 75px;
+  flex: 1;
 }
 
 .loader-container {
