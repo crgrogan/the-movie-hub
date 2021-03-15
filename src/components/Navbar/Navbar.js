@@ -119,11 +119,6 @@ const Navbar = () => {
             )}
           </Link>
         </li>
-        {/* {username && (
-          <li>
-            <span>{username}</span>
-          </li>
-        )} */}
       </ul>
       <div className="burger burger-menu">
         <div className={menuOpen ? "hidden" : ""} onClick={toggleMenu}>
