@@ -9,6 +9,7 @@ import {
   selectedMovieReducers,
 } from "./movieReducers";
 import { accountStatesReducers } from "./userReducers";
+import { navbarReducers } from "./navbarReducers";
 
 const rootReducer = combineReducers({
   session: sessionReducers,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   actor: actorReducers,
   selectedMovie: selectedMovieReducers,
   updateStates: accountStatesReducers,
+  navbarStates: navbarReducers,
 });
 
 export default rootReducer;

@@ -4,6 +4,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
 import "./ActorDetails.scss";
+import Card from "../Card/Card";
 import defaultPerson from "../../images/default-person.png";
 import defaultPoster from "../../images/default-poster.jpg";
 import { getActorDetails } from "../../actions/actorActions";
@@ -37,14 +38,16 @@ const ActorDetails = () => {
           </button>
 
           <section className="actor-details-info">
-            <img
-              src={
-                actorDetails.profile_path
-                  ? `https://image.tmdb.org/t/p/w185/${actorDetails.profile_path}`
-                  : defaultPerson
-              }
-              alt="Image of the actor"
-            />
+            <div className="actor-details-img-container">
+              <img
+                src={
+                  actorDetails.profile_path
+                    ? `https://image.tmdb.org/t/p/w185/${actorDetails.profile_path}`
+                    : defaultPerson
+                }
+                alt="Image of the actor"
+              />
+            </div>
             <div>
               <h1 className="actor-details-name">{actorDetails.name}</h1>
               <div className="actor-details-basic-info">
@@ -73,7 +76,8 @@ const ActorDetails = () => {
           </section>
           <section className="credited-movies">
             <h2>Popular Movies</h2>
-            {actorDetails.movie_credits &&
+            <Card list={actorDetails.movie_credits.cast.slice(0, 15)} />
+            {/*  {actorDetails.movie_credits &&
             actorDetails.movie_credits.cast.length > 0
               ? actorDetails.movie_credits.cast.slice(0, 15).map((movie) => {
                   return (
@@ -107,7 +111,7 @@ const ActorDetails = () => {
                     </Link>
                   );
                 })
-              : ""}
+              : ""} */}
           </section>
         </>
       )}

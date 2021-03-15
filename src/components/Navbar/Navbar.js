@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import "./Navbar.scss";
 import logo from "../../images/main-logo.png";
 import { keywordSearch } from "../../actions/movieActions";
+import { changeNavbar } from "../../actions/navbarActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [username, setUsername] = useState("");
+  const { menuOpen, searchbarOpen } = useSelector(
+    (state) => state.navbarStates
+  );
   const [validationError, setValidationError] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchbarOpen, setSearchbarOpen] = useState(false);
   const history = useHistory();
   const { isLoggedIn, userInfo } = useSelector((state) => state.user);
 
@@ -21,9 +23,9 @@ const Navbar = () => {
     isLoggedIn ? setUsername(userInfo.username) : setUsername("");
   }, [isLoggedIn]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     document.addEventListener("click", removeWarning);
-  }, [validationError]); */
+  }, [validationError]);
 
   const removeWarning = () => {
     document.querySelector(".keyword-input").classList.remove("inputError");
@@ -41,15 +43,16 @@ const Navbar = () => {
       dispatch(keywordSearch(query, 1));
       setQuery("");
       history.push(`/search?q=${query}&page=1`);
+      toggleSearch();
     }
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    dispatch(changeNavbar("menu", !menuOpen));
   };
 
   const toggleSearch = () => {
-    setSearchbarOpen(!searchbarOpen);
+    dispatch(changeNavbar("search", !searchbarOpen));
   };
 
   return (
@@ -83,7 +86,11 @@ const Navbar = () => {
       <ul className={menuOpen ? "nav-links nav-links-open" : "nav-links"}>
         <li>
           <Link to="/" data-title={menuOpen ? null : "Home"}>
-            {menuOpen ? <div>Home</div> : <i className="fa fa-home"></i>}
+            {menuOpen ? (
+              <div onClick={toggleMenu}>Home</div>
+            ) : (
+              <i className="fa fa-home"></i>
+            )}
           </Link>
         </li>
         <li className="discover">
@@ -96,13 +103,17 @@ const Navbar = () => {
             }
             data-title={menuOpen ? null : "Discover"}
           >
-            {menuOpen ? <div>Discover</div> : <i className="fa fa-eye"></i>}
+            {menuOpen ? (
+              <div onClick={toggleMenu}>Discover</div>
+            ) : (
+              <i className="fa fa-eye"></i>
+            )}
           </Link>
         </li>
         <li>
           <Link to="/profile" data-title={menuOpen ? null : "Profile"}>
             {menuOpen ? (
-              <div>Profile</div>
+              <div onClick={toggleMenu}>Profile</div>
             ) : (
               <i className="fa fa-user-circle"></i>
             )}

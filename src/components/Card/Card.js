@@ -23,16 +23,20 @@ const Card = (props) => {
 
               <div className="item-movie-info">
                 <h2 className="item-movie-header">
-                  {item.title}
+                  <span className="item-movie-title">{item.title}</span>
                   {item.vote_count > 0 && (
                     <span className="item-movie-rating">
-                      Rating: {item.vote_average}
+                      {item.vote_average}
                       <i className="fa fa-star"></i>
                     </span>
                   )}{" "}
                 </h2>
                 <p>{item.overview}</p>
-                {item.character && <h4>Character: {item.character}</h4>}
+                {item.character && (
+                  <h4 className="item-movie-character">
+                    Character(s) : {item.character}
+                  </h4>
+                )}
               </div>
             </article>
           </Link>

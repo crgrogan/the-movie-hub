@@ -92,9 +92,9 @@
     }
   }
 
-  .slider-arrow {
-    position: relative;
-    bottom: 50px;
+  .glide__arrow {
+    position: absolute;
+    top: 40%;
     font-size: 8rem;
     color: $tertiary-color;
   }
