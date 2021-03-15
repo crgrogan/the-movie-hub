@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.950ba506.chunk.css",
+    "main.js": "/static/js/main.eb5e3db2.chunk.js",
+    "main.js.map": "/static/js/main.eb5e3db2.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.551588f3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.551588f3.js.map",
+    "static/js/2.bfeab2e5.chunk.js": "/static/js/2.bfeab2e5.chunk.js",
+    "static/js/2.bfeab2e5.chunk.js.map": "/static/js/2.bfeab2e5.chunk.js.map",
+    "static/js/3.c31eae1d.chunk.js": "/static/js/3.c31eae1d.chunk.js",
+    "static/js/3.c31eae1d.chunk.js.map": "/static/js/3.c31eae1d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.950ba506.chunk.css.map": "/static/css/main.950ba506.chunk.css.map",
+    "static/js/2.bfeab2e5.chunk.js.LICENSE.txt": "/static/js/2.bfeab2e5.chunk.js.LICENSE.txt",
+    "static/media/default-backdrop.f18d57c0.jpg": "/static/media/default-backdrop.f18d57c0.jpg",
+    "static/media/default-person.25a06189.png": "/static/media/default-person.25a06189.png",
+    "static/media/default-poster.a058409c.jpg": "/static/media/default-poster.a058409c.jpg",
+    "static/media/Login.scss": "/static/media/login-background-image.f649d7a4.jpg",
+    "static/media/main-logo-purple.905d284f.png": "/static/media/main-logo-purple.905d284f.png",
+    "static/media/Register.scss": "/static/media/register-background-image.53dd018e.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.551588f3.js",
+    "static/js/2.bfeab2e5.chunk.js",
+    "static/css/main.950ba506.chunk.css",
+    "static/js/main.eb5e3db2.chunk.js"
+  ]
+}
