@@ -160,7 +160,7 @@
     }
 
     img {
-      width: 140px;
+      width: 100%;
       height: 185px;
       border-radius: 5px;
     }
@@ -188,7 +188,7 @@
 
   .glide__slides {
     height: 100%;
-    padding: 3rem 1rem;
+    padding: 3rem 0;
   }
 }
 
@@ -281,7 +281,7 @@
 
     .cast {
       img {
-        width: 120px;
+        width: 90%;
         height: 165px;
         border-radius: 5px;
       }

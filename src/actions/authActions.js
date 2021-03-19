@@ -2,14 +2,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 import * as actions from "./types";
-import { getLists } from "./movieActions";
 
 export const getToken = () => async (dispatch) => {
   let res = await axios.get(
     `https://api.themoviedb.org/3/authentication/token/new?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
   );
   const token = res.data.request_token;
-  window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`;
+  window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=https://themoviehub-ie.netlify.app`;
   return dispatch({ type: actions.GET_TOKEN });
 };
 

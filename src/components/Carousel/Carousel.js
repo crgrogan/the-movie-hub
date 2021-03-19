@@ -10,22 +10,16 @@ import { getGenre } from "../../utils";
 const Carousel = (props) => {
   const { genresList } = useSelector((state) => state.genres);
 
-  useEffect(() => {
-    mountSlide();
-  }, []);
-
-  const mountSlide = () => {
-    const sliders = document.querySelectorAll(`.glide-${props.title}`);
-
-    sliders.forEach((item) => {
-      new Glide(item, {
+  useEffect(async () => {
+    if (props.moviesList.length > 0) {
+      new Glide(`.glide-${props.title}`, {
         type: "carousel",
         startAt: 0,
         perView: 7,
         breakpoints: {
           576: {
             perView: 2,
-            gap: 10,
+            gap: 15,
           },
           768: {
             perView: 4,
@@ -33,11 +27,15 @@ const Carousel = (props) => {
           992: {
             perView: 5,
           },
+          1050: {
+            perView: 6,
+            gap: 40,
+          },
         },
-        gap: 25,
+        gap: 30,
       }).mount();
-    });
-  };
+    }
+  }, []);
 
   return (
     <section className="slider">

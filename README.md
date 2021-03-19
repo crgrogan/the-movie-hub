@@ -4,9 +4,7 @@ An application that allows you to browse and review movies. The application is b
 
 ## Project Status
 
-This project is currently in development.
-
-## Project Screen Shot(s)
+This project is currently deployed on Netlify.
 
 ## Installation and Setup Instructions
 
@@ -26,7 +24,7 @@ To Start Server:
 
 To Visit App:
 
-`themoviehub.heroku.com`
+`https://themoviehub-ie.netlify.app`
 
 ## License
 

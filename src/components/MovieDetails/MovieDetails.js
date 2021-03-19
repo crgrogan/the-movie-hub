@@ -51,12 +51,12 @@ const MovieDetails = (props) => {
         new Glide(item, {
           type: "carousel",
           startAt: 0,
-          perView: 5,
-          gap: 50,
+          perView: 6,
+          gap: 35,
           breakpoints: {
             576: {
               perView: 2,
-              gap: 0,
+              gap: 25,
             },
             768: {
               perView: 4,
@@ -105,7 +105,6 @@ const MovieDetails = (props) => {
         );
       }
       if (accountStates.rated) {
-        console.log(accountStates.rated.value);
         setRating(accountStates.rated.value / 2);
       }
       if (accountStates.watchlist) {
@@ -356,8 +355,8 @@ const MovieDetails = (props) => {
                         .map((trailer) => (
                           <li key={trailer.id} className="glide__slide">
                             <iframe
-                              width="240"
-                              height="180"
+                              width="300"
+                              height="225"
                               src={`https://www.youtube.com/embed/${trailer.source}`}
                             ></iframe>
                           </li>

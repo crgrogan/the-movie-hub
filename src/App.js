@@ -13,7 +13,6 @@ import ActorDetails from "./components/ActorDetails/ActorDetails";
 import SearchResults from "./components/SearchResults/SearchResults";
 import Discover from "./components/Discover/Discover";
 import Login from "./components/Login/Login";
-import Register from "./components/Register/Register";
 import Profile from "./components/Profile/Profile";
 import { getUser } from "./actions/authActions";
 import { getGenres } from "./actions/movieActions";
@@ -47,7 +46,7 @@ function App() {
   };
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <ScrollRestoration />
       <div className="container">
         <Navbar />
@@ -58,7 +57,6 @@ function App() {
           <Route path="/search/:q?" component={SearchResults} />
           <Route path="/discover/:filter?" component={Discover} />
           <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
           <PrivateRoute
             authed={isLoggedIn}
             path="/profile"

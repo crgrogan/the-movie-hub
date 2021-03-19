@@ -11,10 +11,7 @@ const initialState = {
   user: { isLoading: true },
 };
 
-const enhancers = [
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-];
+const enhancers = [applyMiddleware(thunk)];
 
 const store = createStore(rootReducer, initialState, compose(...enhancers));
 

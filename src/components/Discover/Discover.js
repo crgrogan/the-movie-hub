@@ -43,7 +43,6 @@ const Discover = (props) => {
   };
 
   useComponentWillMount(async () => {
-    console.log("mount");
     if (location.search) {
       let params = new URLSearchParams(location.search);
       let page = params.get("page");

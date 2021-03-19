@@ -23,8 +23,6 @@ const ActorDetails = () => {
     history.goBack();
   };
 
-  console.log(actorDetails, isLoading);
-
   return (
     <section className="actor-details-container">
       {isLoading ? (
